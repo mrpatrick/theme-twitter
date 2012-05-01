@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ page.title }}</title>
+    {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+    <meta name="author" content="{{ site.author.name }}">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="{{ ASSET_PATH }}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+class="entrance"
+class="container"
+	      <li ng-repeat="post in posts | filter:searchText">
+
+
+
+  -->
+    <style type="text/css">
+       /*style the search field*/
+       input[type="search"]{
+       background-color:#2c2c2c;
+       border:none;
+       border-radius:2px;
+       padding:2px 2px;
+       margin-top:2px;
+       background-image:-moz-linear-gradient(top, #333333, #222222);background-image:-ms-linear-gradient(top, #333333, #222222);background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#222222));background-image:-webkit-linear-gradient(top, #333333, #222222);background-image:-o-linear-gradient(top, #333333, #222222);background-image:linear-gradient(top, #333333, #222222);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;-webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);-moz-box-shadow:0 1px 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);box-shadow:0 1px 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+       }
+
+       #twitter_div li {
+       list-style-type: none;
+       padding:0.625em; 
+       border:3px double #ddd; 
+       -moz-border-radius:5px; 
+       -webkit-border-radius:5px; 
+       border-radius:5px;
+       }
+       
+       <!-- liveseach -->
+       #searchText {
+       line-height:22px;
+       -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset;
+       -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset;
+       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset;
+       border: 1px solid #ccc;
+       color: #999;
+       padding: 6px 15px 6px 15px;
+       -webkit-border-radius:15px;
+       -moz-border-radius: 15px;
+       border-radius: 15px;
+       margin-right: 15px;
+       }
+       
+       .match {
+       background-color: #f9ffa1;
+       -webkit-animation-name: pop;
+       -webkit-animation-duration: 0.3s;
+       -webkit-animation-iteration-count: 1;
+       -webkit-animation-timing-function: ease-in-out;
+       -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+       border-radius: 3px;    
+       }
+
+
+    </style>
+  </head>
+
+  <body>
+    <div id="search-container" class="navbar"  ng-app="JekyllApp" ng-controller="JekyllSearchController">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="{{ HOME_PATH }}">{{ site.title }}</a>
+	  <input class="brand" id="searchText" type="search" placeholder="" ng-model-instant ng-model="searchText" autofocus /> 
+        </div>
+      </div>
+      
+      
+      <div class="row">
+	<div class="span1">
+	  &nbsp;
+	</div>
+	<div class="span7">
+	  <div class="content">
+	    <!-- results -->
+	    <div class="entrance-item">
+	      <h2>Posts</h2>
+	      <ul>
+		<li ng-repeat="post in posts | filter:searchText">
+		  <span ng-bind-html="post.date | date:'mediumDate' | highlight:filterBy"></span> &raquo; 
+		  <a href="{{ site.leftCurleys }} post.url {{ site.rightCurleys }}" ng-bind-html="post.title | highlight:searchText"></a>
+		</li>
+	      </ul>
+	      <h2>Notes</h2>
+	      <ul>
+		<li ng-repeat="note in notes | filter:searchText">
+		  <span ng-bind-html="note.date | date: 'mediumDate' | highlight:filterBy"></span> &raquo; 
+		  <a href="{{ site.leftCurleys }} note.url {{ site.rightCurleys }}" ng-bind-html="note.title | highlight:searchText"></a>
+		</li>
+	      </ul>
+	    </div>
+	    <!-- livesearch -->
+	    {% include custom/livesearch %}
+	  </div>
+	</div>
+	
+	<div class="span4">
+	  {% include custom/tweet %}
+	</div>
+	<div class="span4">
+	  {% include custom/commandlinefu %}
+	</div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="span16">
+	<footer>
+	  <p>&copy; {{ site.author.name }} 2012 
+	    with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+	    and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+	  </p>
+	</footer>
+      </div>
+    </div>
+    
+<!-- /container -->
+{% include JB/analytics %}
+</body>
+</html>
